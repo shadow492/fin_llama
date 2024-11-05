@@ -3,11 +3,17 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 
 @st.cache
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name,use_auth_token = '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')
+def load_model():
+    model_name = "microsoft/Phi-3.5-mini-instruct"  # Update with the desired model name
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name,use_auth_token = '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')
+    return model, tokenizer
 # Streamlit UI
 st.title("Phi-3.5 Mini Instruct Model on Streamlit")
 st.write("A simple interface to generate text using the Phi-3.5 model.")
+
+model, tokenizer = load_model()
+
 # Text input
 input_text = st.text_area("Enter text to generate continuation:", value="Once upon a time")
 
