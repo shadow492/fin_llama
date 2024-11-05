@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import TFAutoModelForCausalLM, AutoTokenizer
 import tensorflow as tf
 
 # Load the LLaMA model and tokenizer
@@ -7,7 +7,7 @@ import tensorflow as tf
 def load_model():
     model_name = "microsoft/Phi-3.5-mini-instruct"  # Replace with actual model name if different
     tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3.5-mini-instruct", trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained("microsoft/Phi-3.5-mini-instruct", trust_remote_code=True)
+    model = TFAutoModelForCausalLM.from_pretrained("microsoft/Phi-3.5-mini-instruct", trust_remote_code=True)
     return model, tokenizer
 
 # Streamlit UI
