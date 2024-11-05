@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import TFAutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import tensorflow as tf
 
 # Load the LLaMA model and tokenizer
