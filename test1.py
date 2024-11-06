@@ -4,7 +4,7 @@ import torch
 
 @st.cache
 def load_model():
-    model_name = "microsoft/Phi-3.5-mini-instruct"  # Update with the desired model name
+    model_name = "meta-llama/Llama-3.2-1B"  # Update with the desired model name
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name,use_auth_token = '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')
     return model, tokenizer
