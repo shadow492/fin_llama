@@ -1,10 +1,14 @@
 import streamlit as st
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+from huggingface_hub import HfApi
+
 
 @st.cache
 def load_model():
     model_name = "meta-llama/Llama-3.2-1B"  # Update with the desired model name
+    api = HfApi()
+    api.set_access_token("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")
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name,use_auth_token = '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')
     return model, tokenizer
