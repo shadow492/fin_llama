@@ -1,4 +1,4 @@
 torch
 transformers
 streamlit
-Huggingface_hub
+huggingface_hub
