@@ -1,6 +1,5 @@
 import streamlit as st
 from transformers import pipeline
-from llamma_model import model, tokenizer
 import torch
 from transformers import LLaMAForCausalLM, LLaMATokenizer
 
