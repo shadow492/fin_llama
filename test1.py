@@ -5,8 +5,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Load pre-trained LLaMA model and tokenizer
 model_name = "meta-llama/Llama-3.2-1B"
-model = LLaMAForCausalLM.from_pretrained(model_name)
-tokenizer = LLaMATokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 def generate_text(prompt):
     input_ids = tokenizer.encode(prompt, return_tensors="pt")
