@@ -1,7 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 import torch
-from transformers import LLaMAForCausalLM, LLaMATokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # Load pre-trained LLaMA model and tokenizer
 model_name = "facebook/llama-3.2B"
