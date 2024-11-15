@@ -1,55 +1,23 @@
 import streamlit as st
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from huggingface_hub import HfApi, HfHubHTTPError
+from transformers import pipeline
+from llamma_model import model, tokenizer
+import torch
+from transformers import LLaMAForCausalLM, LLaMATokenizer
 
-def verify_token(token):
-    api = HfApi()
-    try:
-        user_info = api.whoami(token=token)
-        st.success(f"Token is valid. Logged in as {user_info['name']}.")
-        return True
-    except HfHubHTTPError:
-        st.error("Invalid token or access denied.")
-        return False
+# Load pre-trained LLaMA model and tokenizer
+model_name = "facebook/llama-3.2B"
+model = LLaMAForCausalLM.from_pretrained(model_name)
+tokenizer = LLaMATokenizer.from_pretrained(model_name)
 
-# Your Streamlit app code
-@st.cache
-def load_model():
-    model_name = "meta-llama/Llama-3.2-1B"  # Update with the desired model name
-    token = "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"  # Replace with your token
+def generate_text(prompt):
+    input_ids = tokenizer.encode(prompt, return_tensors="pt")
+    output = model.generate(input_ids, max_length=100)
+    return tokenizer.decode(output[0], skip_special_tokens=True)
 
-    # Verify token
-    if not verify_token(token):
-        st.stop()  # Stop the app if the token is invalid
+st.title("LLaMA Text Generation")
 
-    # Load model and tokenizer
-    tokenizer = AutoTokenizer.from_pretrained(model_name, use_auth_token=token)
-    model = AutoModelForCausalLM.from_pretrained(model_name, use_auth_token=token)
-    return model, tokenizer
+prompt = st.text_input("Enter a prompt:", "")
 
-# Streamlit UI
-st.title("Phi-3.5 Mini Instruct Model on Streamlit")
-st.write("A simple interface to generate text using the Phi-3.5 model.")
-
-model, tokenizer = load_model()
-
-# Text input
-input_text = st.text_area("Enter text to generate continuation:", value="Once upon a time")
-
-# Text generation settings
-max_length = st.slider("Max Length", min_value=10, max_value=200, value=50, step=10)
-
-# Generate text when the button is pressed
 if st.button("Generate"):
-    # Encode input text
-    input_ids = tokenizer.encode(input_text, return_tensors="pt")  # Change to PyTorch tensors
-
-    # Generate text
-    output = model.generate(input_ids, max_length=max_length, do_sample=True, top_p=0.9, temperature=0.7)
-    
-    # Decode generated text
-    generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
-    
-    # Display output
-    st.write("Generated Text:")
+    generated_text = generate_text(prompt)
     st.write(generated_text)
