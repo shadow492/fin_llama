@@ -2,6 +2,9 @@ import streamlit as st
 from transformers import pipeline
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from huggingface_hub import login
+
+login(token = "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")
 
 # Load pre-trained LLaMA model and tokenizer
 model_name = "meta-llama/Llama-3.2-1B"
